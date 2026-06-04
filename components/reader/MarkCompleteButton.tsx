@@ -1,5 +1,6 @@
 "use client";
 import { useProgress } from "@/lib/store/useProgress";
+import type { ChapterProgress } from "@/lib/store/progressStore";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
@@ -15,7 +16,7 @@ export function MarkCompleteButton({ chapterSlug }: { chapterSlug: string }) {
           ...p,
           chapters: {
             ...p.chapters,
-            [chapterSlug]: { status: next as any, updatedAt: new Date().toISOString() },
+            [chapterSlug]: { status: next as ChapterProgress["status"], updatedAt: new Date().toISOString() },
           },
         }));
         toast.success(next === "completed" ? "Đã đánh dấu hoàn thành" : "Đã mở lại");

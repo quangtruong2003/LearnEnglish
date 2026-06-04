@@ -1,6 +1,6 @@
 import { slugify } from "./slugify";
 import type {
-  Chapter, PracticeQuestion, Section, Stage, StageSlug, Textbook, WordFormGroup,
+  Chapter, Section, Stage, StageSlug, Textbook, WordFormGroup,
 } from "./types";
 
 function splitRow(line: string): string[] {

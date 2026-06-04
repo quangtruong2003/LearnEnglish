@@ -1,12 +1,8 @@
 import type { ISODate } from "../util/date";
 import { addDays, isDue as utilIsDue, today as _today } from "../util/date";
+import type { LeitnerCard as LeitnerCardType } from "./progressStore";
 
-export type LeitnerCard = {
-  groupId: string;
-  box: 1 | 2 | 3 | 4 | 5;
-  nextReviewAt: ISODate;
-  lastResult: "unknown" | "forgot" | "remembered";
-};
+export type LeitnerCard = LeitnerCardType;
 
 export function initCard(groupId: string, now: Date = new Date()): LeitnerCard {
   return { groupId, box: 1, nextReviewAt: _today(now), lastResult: "unknown" };

@@ -8,6 +8,7 @@ import { today } from "@/lib/util/date";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "sonner";
+import type { LeitnerCard } from "@/lib/store/progressStore";
 
 export function FlashcardDeck() {
   const { progress, update } = useProgress();
@@ -15,7 +16,7 @@ export function FlashcardDeck() {
   const [seen, setSeen] = useState<Set<string>>(new Set());
 
   const groupById = useMemo(() => {
-    const m = new Map<string, { verb: string; noun: string | null; adjective: string | null; adverb: string | null }>();
+    const m = new Map<string, Pick<import("@/lib/content/types").WordFormGroup, "id"> & { verb: string; noun: string | null; adjective: string | null; adverb: string | null }>();
     for (const ch of textbook.allChapters) {
       for (const g of ch.wordFormGroups ?? []) m.set(g.id, g);
     }
@@ -23,7 +24,7 @@ export function FlashcardDeck() {
   }, []);
 
   const dueCards = useMemo(() => {
-    return Object.values(progress.leitner.cards).filter((c) => isCardDue(c, today()) && !seen.has(c.groupId));
+    return (Object.values(progress.leitner.cards) as LeitnerCard[]).filter((c) => isCardDue(c, today()) && !seen.has(c.groupId));
   }, [progress.leitner.cards, seen]);
 
   const card = dueCards[0];

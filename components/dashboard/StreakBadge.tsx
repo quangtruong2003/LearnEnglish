@@ -11,5 +11,5 @@ export function StreakBadge() {
   const days = progress.streak?.days ?? 0;
   const label = days === 0 ? "Bắt đầu streak" : `🔥 ${days} ngày`;
   const variant = status === "broken" ? "destructive" : status === "at_risk" ? "outline" : "default";
-  return <Badge variant={variant as any}>{label}</Badge>;
+  return <Badge variant={variant as "default" | "secondary" | "destructive" | "outline"}>{label}</Badge>;
 }

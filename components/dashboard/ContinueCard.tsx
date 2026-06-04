@@ -3,11 +3,12 @@ import Link from "next/link";
 import { useProgress } from "@/lib/store/useProgress";
 import { textbook } from "@/content/textbook";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import type { ChapterProgress } from "@/lib/store/progressStore";
 
 export function ContinueCard() {
   const { progress, hydrated } = useProgress();
   if (!hydrated) return null;
-  const last = Object.entries(progress.chapters)
+  const last = (Object.entries(progress.chapters) as [string, ChapterProgress][])
     .filter(([, v]) => v.status !== "unread")
     .sort((a, b) => b[1].updatedAt.localeCompare(a[1].updatedAt))[0];
   if (!last) return null;

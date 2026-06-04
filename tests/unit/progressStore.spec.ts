@@ -23,7 +23,7 @@ describe("progressStore", () => {
     p.chapters["cac-loai-tu"] = { status: "completed", updatedAt: "2026-06-04" };
     writeProgress(p);
     const r = readProgress();
-    expect(r.chapters["cac-loai-tu"].status).toBe("completed");
+    expect(r.chapters["cac-loai-tu"]?.status).toBe("completed");
   });
   it("corrupted JSON resets to default and warns", () => {
     localStorage.setItem(KEY, "not json");

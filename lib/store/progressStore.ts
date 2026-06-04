@@ -34,9 +34,9 @@ const StreakSchema = z.object({ lastStudyDate: z.string(), days: z.number().int(
 
 const ProgressSchema = z.object({
   schemaVersion: z.literal(1),
-  chapters: z.record(ChapterProgressSchema),
-  quizResults: z.record(z.array(QuizRunSchema)),
-  leitner: z.object({ schemaVersion: z.literal(1), cards: z.record(LeitnerCardSchema) }),
+  chapters: z.record(z.string(), ChapterProgressSchema),
+  quizResults: z.record(z.string(), z.array(QuizRunSchema)),
+  leitner: z.object({ schemaVersion: z.literal(1), cards: z.record(z.string(), LeitnerCardSchema) }),
   streak: StreakSchema.nullable(),
   updatedAt: z.string(),
 });

@@ -34,7 +34,7 @@ export function QuizRunner({ chapter }: { chapter: Chapter }) {
       const finalAnswers = [...answers, { questionId: q.id, chosen }];
       const r = scoreQuiz(qs, finalAnswers);
       update((p) => {
-        const next = { ...p };
+        const next: typeof p = { ...p };
         next.quizResults = { ...p.quizResults, [chapter.slug]: [
           { id: crypto.randomUUID(), chapterSlug: chapter.slug, startedAt: new Date().toISOString(), finishedAt: new Date().toISOString(), answers: r.answers, scorePct: r.scorePct },
           ...(p.quizResults[chapter.slug] ?? []),
