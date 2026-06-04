@@ -1,31 +1,26 @@
-import { Geist, Geist_Mono, Inter } from "next/font/google"
-import { Toaster } from "@/components/ui/sonner"
+import "./globals.css";
+import type { Metadata } from "next";
+import { ThemeProvider } from "next-themes";
+import { Sidebar } from "@/components/layout/Sidebar";
+import { Toaster } from "sonner";
 
-import "./globals.css"
-import { cn } from "@/lib/utils";
+export const metadata: Metadata = {
+  title: "TOEIC 45 ngày",
+  description: "Luyện thi TOEIC 700+ theo lộ trình 45 ngày",
+};
 
-const inter = Inter({subsets:['latin'],variable:'--font-sans'})
-
-const fontMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-})
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="vi"
-      suppressHydrationWarning
-      className={cn("dark antialiased", fontMono.variable, "font-sans", inter.variable)}
-    >
-      <body>
-        {children}
-        <Toaster />
+    <html lang="vi" className="dark" suppressHydrationWarning>
+      <body className="min-h-screen bg-background text-foreground antialiased">
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+          <div className="flex">
+            <Sidebar />
+            <main className="flex-1 min-w-0">{children}</main>
+          </div>
+          <Toaster richColors position="bottom-right" />
+        </ThemeProvider>
       </body>
     </html>
-  )
+  );
 }
