@@ -32,6 +32,13 @@ export type WordFormGroup = {
   adverb: string | null;
 };
 
+export type PracticeAnswer = {
+  ordinal: number;
+  answer: string;
+  partOfSpeech: "Danh từ" | "Động từ" | "Tính từ" | "Trạng từ" | "Khác";
+  explanation: string;
+};
+
 export type PracticeChoice = { letter: "A" | "B" | "C" | "D"; text: string };
 
 export type PracticeQuestion = {
