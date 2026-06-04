@@ -1,4 +1,5 @@
 import { Geist, Geist_Mono, Inter } from "next/font/google"
+import { Toaster } from "@/components/ui/sonner"
 
 import "./globals.css"
 import { cn } from "@/lib/utils";
@@ -23,6 +24,7 @@ export default function RootLayout({
     >
       <body>
         {children}
+        <Toaster />
       </body>
     </html>
   )
