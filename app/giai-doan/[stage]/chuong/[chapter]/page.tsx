@@ -28,6 +28,9 @@ export default async function ChapterPage({ params }: { params: Promise<{ stage:
               <WordFormTable groups={ch.wordFormGroups} />
             </section>
           )}
+          {ch.practiceQuestions && ch.practiceQuestions.length > 0 && (
+            <Link href={`/practice/${ch.slug}`} className="underline text-sm mr-auto self-center">Làm bài tập →</Link>
+          )}
           <div className="flex justify-end mt-8">
             <MarkCompleteButton chapterSlug={ch.slug} />
           </div>
