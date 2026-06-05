@@ -1,7 +1,10 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { ThemeProvider } from "next-themes";
-import { Sidebar } from "@/components/layout/Sidebar";
+import { ThemeProvider } from "@/components/theme-provider";
+import { SidebarProvider, Sidebar, SidebarInset } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/layout/AppSidebar";
+import { Header } from "@/components/layout/Header";
+import { CommandMenu } from "@/components/layout/CommandMenu";
 import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
@@ -13,11 +16,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="vi" className="dark" suppressHydrationWarning>
       <body className="min-h-screen bg-background text-foreground antialiased">
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-          <div className="flex">
-            <Sidebar />
-            <main className="flex-1 min-w-0">{children}</main>
-          </div>
+        <ThemeProvider>
+          <SidebarProvider defaultOpen={true}>
+            <Sidebar>
+              <AppSidebar />
+            </Sidebar>
+            <SidebarInset>
+              <Header />
+              <main className="flex-1 min-w-0">{children}</main>
+            </SidebarInset>
+            <CommandMenu />
+          </SidebarProvider>
           <Toaster richColors position="bottom-right" />
         </ThemeProvider>
       </body>
