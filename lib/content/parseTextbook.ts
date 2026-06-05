@@ -109,9 +109,10 @@ export function parseTextbook(md: string): Textbook {
       flushSection();
       flushTable();
       if (currentChapter) {
+        const heading = line.slice(3).trim();
         currentSection = {
-          id: slugify(line.slice(3).trim()),
-          heading: line.slice(3).trim(),
+          id: uniqueSectionId(currentChapter.slug, heading, new Set(currentChapter.sections.map((s) => s.id))),
+          heading,
           level: 2,
           body: "",
         };
@@ -127,7 +128,7 @@ export function parseTextbook(md: string): Textbook {
         const level = line.startsWith("#### ") ? 4 : 3;
         const heading = line.slice(level + 1).trim();
         currentSection = {
-          id: `${currentChapter.slug}-${slugify(heading)}`,
+          id: uniqueSectionId(currentChapter.slug, heading, new Set(currentChapter.sections.map((s) => s.id))),
           heading,
           level: level as 3 | 4,
           body: "",
@@ -166,4 +167,16 @@ function makeChapter(line: string, stage: StageSlug, chapterIndex: number): Chap
     wordFormGroups: [],
     practiceQuestions: [],
   };
+}
+
+function uniqueSectionId(chapterSlug: string, heading: string, existingIds: Set<string>): string {
+  const baseId = slugify(heading);
+  let id = baseId;
+  let counter = 2;
+  while (existingIds.has(id)) {
+    id = `${baseId}-${counter}`;
+    counter++;
+  }
+  existingIds.add(id);
+  return id;
 }
