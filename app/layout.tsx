@@ -2,14 +2,13 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SidebarProvider, Sidebar, SidebarInset } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/layout/AppSidebar";
-import { Header } from "@/components/layout/Header";
-import { CommandMenu } from "@/components/layout/CommandMenu";
+import { SidebarContent } from "@/components/catalog/SidebarContent";
+import { TopNav } from "@/components/catalog/TopNav";
 import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
-  title: "TOEIC 45 ngày",
-  description: "Luyện thi TOEIC 700+ theo lộ trình 45 ngày",
+  title: "Học TOEIC 45 ngày",
+  description: "Lộ trình học TOEIC 700+ theo 3 giai đoạn",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -17,15 +16,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="vi" className="dark" suppressHydrationWarning>
       <body className="min-h-screen bg-background text-foreground antialiased">
         <ThemeProvider>
-          <SidebarProvider defaultOpen={true}>
+          <SidebarProvider defaultOpen={false}>
             <Sidebar>
-              <AppSidebar />
+              <SidebarContent />
             </Sidebar>
             <SidebarInset>
-              <Header />
+              <TopNav />
               <main className="flex-1 min-w-0">{children}</main>
             </SidebarInset>
-            <CommandMenu />
           </SidebarProvider>
           <Toaster richColors position="bottom-right" />
         </ThemeProvider>
