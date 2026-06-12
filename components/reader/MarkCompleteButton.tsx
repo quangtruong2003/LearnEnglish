@@ -1,6 +1,5 @@
 "use client";
 import { useProgress } from "@/lib/store/useProgress";
-import { writeProgress } from "@/lib/store/progressStore";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
@@ -10,25 +9,23 @@ type MarkCompleteButtonProps = {
 };
 
 export function MarkCompleteButton({ chapterSlug }: MarkCompleteButtonProps) {
-  const { progress, setProgress, hydrated } = useProgress();
+  const { progress, update, hydrated } = useProgress();
   if (!hydrated) return null;
 
   const current = progress.chapters[chapterSlug];
   const isCompleted = current?.status === "completed";
 
   const toggle = () => {
-    const next: typeof progress = {
-      ...progress,
+    update((p) => ({
+      ...p,
       chapters: {
-        ...progress.chapters,
+        ...p.chapters,
         [chapterSlug]: {
           status: isCompleted ? "in_progress" : "completed",
           updatedAt: new Date().toISOString(),
         },
       },
-    };
-    writeProgress(next);
-    setProgress(next);
+    }));
     toast.success(
       isCompleted ? "Đã bỏ đánh dấu hoàn thành" : "Đã đánh dấu hoàn thành",
       { duration: 2000 }
