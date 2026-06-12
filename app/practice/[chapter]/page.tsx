@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { textbook } from "@/content/textbook";
 import { QuizRunner } from "@/components/practice/QuizRunner";
-import Link from "next/link";
+import { ChevronLeft } from "lucide-react";
 
 export function generateStaticParams() {
   return textbook.allChapters
@@ -14,13 +15,34 @@ export default async function PracticePage({ params }: { params: Promise<{ chapt
   const ch = textbook.allChapters.find((c) => c.slug === chapter);
   if (!ch) notFound();
   if (!ch.practiceQuestions || ch.practiceQuestions.length === 0) {
-    return <div className="p-6">Chương này chưa có bài tập. <Link href={`/giai-doan/${ch.stage}/chuong/${ch.slug}`} className="underline">Về chương</Link></div>;
+    return (
+      <div className="mx-auto max-w-3xl px-4 py-6">
+        <div className="rounded-3xl border border-border/60 bg-card/80 p-8 text-center">
+          <p className="text-muted-foreground">Chương này chưa có bài tập.</p>
+          <Link href={`/giai-doan/${ch.stage}/chuong/${ch.slug}`} className="mt-4 inline-block text-sm underline">
+            Quay lại chương
+          </Link>
+        </div>
+      </div>
+    );
   }
+
   return (
-    <div className="p-6 max-w-3xl mx-auto space-y-4">
-      <Link href={`/giai-doan/${ch.stage}/chuong/${ch.slug}`} className="text-sm underline text-muted-foreground">← Về chương</Link>
-      <h1 className="text-2xl font-bold">Bài tập: {ch.title}</h1>
-      <QuizRunner chapter={ch} />
+    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 py-6 sm:px-6">
+      <Link
+        href={`/giai-doan/${ch.stage}/chuong/${ch.slug}`}
+        className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+      >
+        <ChevronLeft className="h-4 w-4" />
+        Quay lại chương
+      </Link>
+      <div className="rounded-3xl border border-border/60 bg-card/80 p-6 shadow-sm">
+        <h1 className="mb-1 text-2xl font-semibold tracking-tight">Bài tập: {ch.title}</h1>
+        <p className="mb-6 text-sm text-muted-foreground">
+          {ch.practiceQuestions.length} câu hỏi
+        </p>
+        <QuizRunner chapter={ch} />
+      </div>
     </div>
   );
 }
