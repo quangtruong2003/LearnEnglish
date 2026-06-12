@@ -1,28 +1,33 @@
 import type { WordFormGroup } from "@/lib/content/types";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
-export function WordFormTable({ groups }: { groups: WordFormGroup[] }) {
+type WordFormTableProps = {
+  groups: WordFormGroup[];
+};
+
+export function WordFormTable({ groups }: WordFormTableProps) {
   return (
-    <div className="overflow-x-auto my-4">
-      <table className="w-full text-sm">
-        <thead>
-          <tr className="border-b border-border">
-            <th className="text-left p-2">Verb</th>
-            <th className="text-left p-2">Noun</th>
-            <th className="text-left p-2">Adjective</th>
-            <th className="text-left p-2">Adverb</th>
-          </tr>
-        </thead>
-        <tbody>
+    <div className="mt-4 overflow-x-auto">
+      <Table className="text-sm">
+        <TableHeader>
+          <TableRow>
+            <TableHead>Động từ</TableHead>
+            <TableHead>Danh từ</TableHead>
+            <TableHead>Tính từ</TableHead>
+            <TableHead>Trạng từ</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
           {groups.map((g) => (
-            <tr key={g.id} className="border-b border-border/50">
-              <td className="p-2 font-medium">{g.verb}</td>
-              <td className="p-2">{g.noun ?? "—"}</td>
-              <td className="p-2">{g.adjective ?? "—"}</td>
-              <td className="p-2">{g.adverb ?? "—"}</td>
-            </tr>
+            <TableRow key={g.id}>
+              <TableCell className="font-medium">{g.verb}</TableCell>
+              <TableCell>{g.noun ?? "—"}</TableCell>
+              <TableCell>{g.adjective ?? "—"}</TableCell>
+              <TableCell>{g.adverb ?? "—"}</TableCell>
+            </TableRow>
           ))}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
     </div>
   );
 }
